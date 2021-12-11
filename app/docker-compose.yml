@@ -1,5 +1,5 @@
 version: "3.7"
-  
+
 services:
 
   flask:
@@ -10,12 +10,10 @@ services:
     expose:
       - 8080
 
-  proxy:
-    image: nginx:latest
+  nginx:
+    image: ngnix:latest
     build: ./nginx
     container_name: nginx
     restart: always
     ports:
       - "80:80"
-    depends_on:
-      - flask
