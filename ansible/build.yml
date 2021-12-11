@@ -2,9 +2,9 @@
 - hosts: docker_target
   vars:
     - webimagename: teekay2203/myjokes
-    - webimagetag: 1.0
+    - webimagetag: 2.0
     - proxyimagename: teekay2203/mynginx
-    - proxyimagetag: 1.0
+    - proxyimagetag: 2.0
   become: yes
   become_method: sudo
   tasks:

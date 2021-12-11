@@ -9,7 +9,7 @@
 
    docker build  --network=host --no-cache -t $DOCKER_HUB_USER_NAME/$WEBAPPIMAGE:$VERSION_WEBAPP .
 
-   cd ./webappforjokes/app/nginx
+   cd ../nginx
 
    docker build --network=host --no-cache -t $DOCKER_HUB_USER_NAME/$PROXYIMAGE:$VERSION_NGINX .
 
