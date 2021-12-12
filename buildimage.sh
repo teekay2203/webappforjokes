@@ -3,9 +3,11 @@
    source buildimage
    set -x #echo on
     
-   git clone https://github.com/teekay2203/webappforjokes.git
+   cd ansible
+#   git clone https://github.com/teekay2203/webappforjokes.git
+   ansible-playbook builddocker.yml   
 
-   cd ./webappforjokes/app/flask
+   cd ../app/flask
 
    docker build  --network=host --no-cache -t $DOCKER_HUB_USER_NAME/$WEBAPPIMAGE:$VERSION_WEBAPP .
 
@@ -26,3 +28,7 @@
 
    docker push $DOCKER_HUB_USER_NAME/$WEBAPPIMAGE:$VERSION_WEBAPP
    docker push $DOCKER_HUB_USER_NAME/$PROXYIMAGE:$VERSION_NGINX
+  
+   cd ../../ansible
+
+   ansible-playbook deployapp.yml

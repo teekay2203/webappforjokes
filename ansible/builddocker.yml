@@ -1,10 +1,6 @@
 ---
-- hosts: docker_target
+- hosts: dockerhost
   vars:
-    - webimagename: teekay2203/myjokes
-    - webimagetag: 3.0
-    - proxyimagename: teekay2203/mynginx
-    - proxyimagetag: 3.0
   become: yes
   become_method: sudo
   tasks:
@@ -54,3 +50,4 @@
 
   - name: Create symlink
     file: src=/usr/local/bin/docker-compose dest=/usr/bin/docker-compose state=link
+
