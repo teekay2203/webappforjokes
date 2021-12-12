@@ -1,0 +1,90 @@
+---
+- hosts: docker_target
+  vars:
+    - webimagename: teekay2203/myjokes
+    - webimagetag: 3.0
+    - proxyimagename: teekay2203/mynginx
+    - proxyimagetag: 3.0
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Configure sudo yum
+    yum_repository:
+      name: "docker_repo"
+      description: Yum repo for docker
+      baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+      gpgcheck: 0
+ 
+  - name: Install Docker
+    package:
+      name : "docker-ce-18.06.3.ce-3.el7.x86_64"
+            #name: "docker-ce-20.10.9-3.el7.x86_64.rpm"
+      state: present
+  - name: Install Python
+    package:
+      name: "python3"
+      state: present
+
+  - name: Install Docker sdk for python
+    pip:
+      name: docker
+
+  - name: Start Docker service
+    service:
+      name: "docker"
+      state: started
+
+  # sudo groupadd docker
+  - name: Create "docker" group
+    group:
+      name: docker
+      state: present
+      # sudo: true
+      #
+# reset_connection doesn't support conditionals.
+  - user: name=root groups=docker
+  - name: Reset connection so docker group is picked up.
+    meta: reset_connection
+
+  - name: install docker compose    
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+      dest: /usr/local/bin/docker-compose
+      mode: 755
+
+  - name: Create symlink
+    file: src=/usr/local/bin/docker-compose dest=/usr/bin/docker-compose state=link
+
+
+  - name: Pull myjokeimage docker image
+    docker_image:
+      name: "{{ webimagename }}"
+      tag: "{{ webimagetag }}"
+      source: pull
+
+  - name: Pull proxy docker image
+    docker_image:
+      name: "{{ proxyimagename }}"
+      tag: "{{ proxyimagetag }}"
+      source: pull
+
+  - name: Run docker container
+    docker_container:
+      name: flask
+      image: "{{ webimagename }}:{{  webimagetag }}" 
+      state: started
+      exposed_ports:
+      - "8080"
+      restart: yes
+
+  - name: Run docker container
+    docker_container:
+      name: nginx
+      image: "{{ proxyimagename }}:{{ proxyimagetag }}"
+      state: started
+      ports:
+      - "80:80"
+      restart: yes
+      links:
+        - flask
+
