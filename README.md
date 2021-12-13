@@ -1,5 +1,5 @@
 # webappforjokes
-This repository contains code for deploying a python app which displays Jokes From Chuck Noris api. User has to give the host name to display random joke. If he wants to see what category jokes are available he can give /category in url bar to see the list of available category. However, on main page also 16 categories are mentioned for simplification. User can give any particular category in address bar to list jokes for that category.
+This repository contains code for deploying a python app which displays Jokes From Chuck Noris api. User has to give the host name to display random joke. If he wants to see what category jokes are available , he can give /category in url bar to see the list of available category. However, on main page also 16 categories are mentioned for simplification. User can give any particular category in address bar to list jokes for that category.
 
 # Prerequisite
 1. Ansible should be deployed on controller machine.
