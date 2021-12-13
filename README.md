@@ -29,3 +29,5 @@ User has to run ./buildimage.sh script for build, integrate and deployment.
 # Note:
 Docker-Compose has also been installed on controller and target machine.
 docker-compose.yml and docker-compose-main.yml are also present. So if someone wants to build or run images using compose , he can do that as well.
+docker-compose.yml will build the images and run them as container.
+docker-compose-main.yml will pull the images pushed on docker-hub and run them as container.
