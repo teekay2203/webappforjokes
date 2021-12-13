@@ -26,3 +26,6 @@ User has to run ./buildimage.sh script for build, integrate and deployment.
 6. This playbook install docker in target machine/s , pull the images from docker hub (name given in the ansible playbook as variable), and run them as container.
 7. user can check the output using "curl http://localhost" command or directly can hit the external ip of machine from any browser(internet).
 
+# Note:
+Docker-Compose has also been installed on controller and target machine.
+docker-compose.yml and docker-compose_main.yml are also present. So if someone wants to build or run images using compose , he can do that as well.
